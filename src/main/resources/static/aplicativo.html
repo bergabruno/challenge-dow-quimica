@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+
+<body>
+
+    <div class="icon-bar">
+        <a href="usuario.html"><i class="fa fa-user"></i></a>
+        <a class="active" href="#"><i class="fa fa-mobile"></i></a>
+        <a href="favorito.html"><i class="fa fa-star"></i></a>
+    </div>
+
+    <h1>Aplicativo</h1>
+    <div class="container">
+
+        <div class="table">
+            <h2>Inserir Aplicativo</h2>
+            <form action="aplicativo/insertApp" method="post">
+                <label class= "data" for="id"> Id do aplicativo: </label>
+                <input type="text" name="id">
+
+                <label class= "data" for="nome"> Nome do aplicativo: </label> 
+                <input type="text" name="nome"> <br></br>
+
+				<label class="data" for="idUser"> Id do usuario que tem esse aplicativo: </label>
+                <input type="text" name="idUser">
+                
+                <input class="bottom" type="submit" value="Inserir Aplicativo">
+            </form>
+        </div>
+
+        <div class="table">
+            <h2>Procurar Aplicativo</h2>
+            <form action="aplicativo/searchApp" method="get">
+                <label class= "data" for="id"> Procurar por id do aplicativo: </label>
+                <input type="text" name="id">
+                <input class="bottom" type="submit" value="Procurar">
+            </form>
+            <h3>ou</h3>
+            <form action="aplicativo/searchAllApps" method="get">
+                <input class="bottom" type="submit" value="Listar Todos os Aplicativos">
+            </form>
+
+        </div>
+
+
+        <div class="table">
+            <h2>Alterar Aplicativo</h2>
+            <form action="aplicativo/updateApp" method="get">
+                <label class= "data"  for="id"> Id do aplicativo: </label>
+                <input type="text" name="id">
+
+                <label class= "data"  for="nome"> Nome do aplicativo: </label>
+                <input type="text" name="nome">
+
+                <input class="bottom" type="submit" value="Alterar Aplicativo">
+            </form>
+        </div>
+
+        <div class="table">
+            <h2>Excluir Aplicativo</h2>
+            <form action="aplicativo/deleteApp" method="get">
+                <label class= "data"  for="id"> Id do Aplicativo: </label>
+                <input type="text" name="id">
+                <input class="bottom-delete" type="submit" value="DELETAR Aplicativo">
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

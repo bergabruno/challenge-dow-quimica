@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+<body>
+
+    <div class="icon-bar">
+        <a class="active" href="#"><i class="fa fa-user"></i></a>
+        <a href="aplicativo.html"><i class="fa fa-mobile"></i></a>
+        <a href="favorito.html"><i class="fa fa-star"></i></a>
+    </div>
+
+    <h1 class="">Usuarios</h1>
+    <div class="container">
+
+        <div class="table">
+            <h2>Inserir Usuario</h2>
+            <form class="forms" action="usuario/insertUser" method="post">
+                <label class= "data" for="id"> Id do usuario: </label>
+                <input type="text" name="id" required="required">
+
+                <label class= "data"  for="nome"> Nome: </label>
+                <input type="text" name="nome" required="required">
+
+                <label class= "data"  for="sobrenome"> Sobrenome: </label>
+                <input type="text" name="sobrenome">
+
+                <label  class= "data" for="email"> Email: </label>
+                <input type="text" name="email" required="required">
+
+                <label class= "data"  for="cpf"> CPF: </label>
+                <input type="text" name="cpf" required="required">
+
+                <label class= "data"  for="idade"> Idade: </label>
+                <input type="text" name="idade" required="required">
+
+                <input class="bottom" type="submit" value="Inserir Usuario">
+                            </form>
+        </div>
+
+        <div class="table">
+            <h2>Procurar Usuario</h2>
+            <form class="forms" action="usuario/searchUser" method="get">
+                <label class= "data"  for="id"> Procurar por id do usuario: </label>
+                <input type="text" name="id" required="required">
+                <input class="bottom" type="submit" value="Procurar" >
+            </form>
+            
+            <h3>ou</h3>
+            
+            <form action="usuario/searchAllUsers" method="get">
+                <input class="bottom" type="submit" value="Listar Todos os usuarios">
+            </form>
+
+        </div>
+
+
+        <div class="table">
+            <h2>Alterar Usuario</h2>
+            <form class="forms" action="usuario/updateUser" method="put">
+                <label class= "data"  for="id"> Id do usuario: </label>
+                <input type="text" name="id">
+
+                <label class= "data"  for="nome"> Nome: </label>
+                <input type="text" name="nome">
+
+                <label class= "data"  for="sobrenome"> Sobrenome: </label>
+                <input type="text" name="sobrenome">
+
+                <label class= "data"  for="email"> Email: </label>
+                <input type="text" name="email">
+
+                <label class= "data"  for="cpf"> CPF: </label>
+                <input type="text" name="cpf">
+
+                <label class= "data"  for="idade"> Idade: </label>
+                <input type="text" name="idade">
+
+                <input class="bottom" type="submit" value="Alterar Usuario">
+            </form>
+        </div>
+
+        <div class="table">
+            <h2>Excluir Usuario</h2>
+            <form class="forms" action="usuario/deleteUser" method="get">
+                <label class= "data"  for="idUser"> Id do usuario: </label>
+                <input type="text" name="idUser" >
+                <input class="bottom-delete" type="submit" value="DELETAR usuario">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

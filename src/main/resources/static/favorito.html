@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+
+
+<body>
+
+    <div class="icon-bar">
+        <a href="usuario.html"><i class="fa fa-user"></i></a>
+        <a href="aplicativo.html"><i class="fa fa-mobile"></i></a>
+        <a class="active" href="#"><i class="fa fa-star"></i></a>
+    </div>
+
+    <h1>Favorito</h1>
+    <div class="container">
+
+        <div class="table">
+            <h2>Inserir Favorito</h2>
+            <form action="favorito/insertFav" method="post">
+                <label class="data" for="id"> Id do favorito: </label>
+                <input type="text" name="id" required = "required">
+
+                <label class="data" for="nome"> Nome do favorito: </label>
+                <input type="text" name="nome" required = "required"> <br></br>
+
+                <label class="data" for="idUser"> Id do usuario que tem esse favorito: </label>
+                <input type="text" name="idUser" required = "required">
+
+                <input class="bottom" type="submit" value="Inserir Favorito">
+            </form>
+        </div>
+
+        <div class="table">
+            <h2>Procurar Favorito</h2>
+            <form action="favorito/searchFav" method="get">
+                <label class="data" for="id"> Procurar por id do favorito: </label>
+                <input type="text" name="id" required = "required">
+                <input class="bottom" type="submit" value="Procurar">
+            </form>
+            <h3>ou</h3>
+            <form action="favorito/searchAllFavs" method="get">
+                <input class="bottom" type="submit" value="Listar Todos os Favoritos">
+            </form>
+
+        </div>
+
+
+        <div class="table">
+            <h2>Alterar Favorito</h2>
+            <form action="favorito/updateFav" method="get">
+                <label class="data" for="id"> Id do favorito: </label>
+                <input type="text" name="id" required = "required">
+
+                <label class="data" for="nome"> Nome do favorito: </label>
+                <input type="text" name="nome" required = "required"> <br></br>
+
+                <label class="data" for="idUser"> Id do usuario que tem esse favorito: </label>
+                <input type="text" name="idUser" required = "required">
+
+                <input class="bottom" type="submit" value="Alterar Favorito">
+            </form>
+        </div>
+
+        <div class="table">
+            <h2>Excluir Favorito</h2>
+            <form action="favorito/deleteFav" method="get">
+                <label class="data" for="id"> Id do Favorito: </label>
+                <input type="text" name="id" required = "required">
+                <input class="bottom-delete" type="submit" value="DELETAR Favorito">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
