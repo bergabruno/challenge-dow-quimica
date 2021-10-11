@@ -7,9 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 @Entity
 @Table(name = "tb_aplicativo")
 public class Aplicativo {
@@ -23,7 +20,6 @@ public class Aplicativo {
 
   @OneToOne
   @JoinColumn(name = "usuario_id", unique = true)
-  @Cascade(CascadeType.DELETE)
   private Usuario usuario;
 
   public String toString() {

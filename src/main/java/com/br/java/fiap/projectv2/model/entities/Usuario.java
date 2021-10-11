@@ -1,5 +1,6 @@
 package com.br.java.fiap.projectv2.model.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,12 +37,12 @@ public class Usuario {
   private int idade;
 
   @OneToOne(mappedBy = "usuario")
-  @Cascade(CascadeType.DELETE)
+  @Cascade(CascadeType.REMOVE)
   private Aplicativo aplicativo;
 
-  @OneToMany
-  @Cascade(CascadeType.DELETE)
-  private List<Favorito> favoritos;
+  @OneToMany(mappedBy = "usuario", orphanRemoval = true)
+  @Cascade(CascadeType.ALL)
+  private List<Favorito> favoritos = new ArrayList<Favorito>();
 
   public Usuario() {
 

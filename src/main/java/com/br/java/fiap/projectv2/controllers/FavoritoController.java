@@ -24,49 +24,77 @@ public class FavoritoController {
   private FavoritoRepository fr;
   @Autowired
   private UsuarioRepository ur;
-  
+
   @PostMapping("/insertFav")
   public String inserir(Favorito favorito, @RequestParam(name = "idUser") int idUser) {
-    
+
     StringBuilder aux = new StringBuilder();
     aux.append("<body style = font-size:30px><html>");
 
     try {
-    Optional<Usuario> usuario = ur.findById(idUser);
-    
-    if(fr.existsById(favorito.getId())) {
-      aux.append("Ja existe um favorito com esse ID!");
-    }
+      Optional<Usuario> usuario = ur.findById(idUser);
+      if (fr.existsById(favorito.getId())) {
+        aux.append("Ja existe um favorito com esse ID!");
+      } else if (usuario != null) {
+        Usuario user = usuario.get();
+        Favorito fav = new Favorito(favorito.getId(), favorito.getNome(), user);
+        fr.save(fav);
+        aux.append("Favorito inserido com sucesso!");
+      } else {
+        aux.append("Erro ao inserir favorito, nao existe usuario com esse Id!");
+      }
 
-    if(usuario != null) {
-      Usuario user = usuario.get();
-      Favorito fav = new Favorito(favorito.getId(), favorito.getNome(), user);
-      //TODO verificacao de usuario
-      
-      fr.save(fav);
-      aux.append("Favorito inserido com sucesso!") ;
-    }else {
-      aux.append("Erro ao inserir favorito, nao existe usuario com esse Id!") ;
-    }
-    
-    }catch(NoSuchElementException e){
+    } catch (NoSuchElementException e) {
       aux.append("Nao existe usuario com esse ID!");
-    }catch(DataIntegrityViolationException e) {
+    } catch (DataIntegrityViolationException e) {
       aux.append("Ja existe um favorito que contem o id deste usuario!");
-    }
-    
-    catch(Exception e) {
-      aux.append("Erro ao inserir favorito" + e) ;
+    }catch (Exception e) {
+      aux.append("Erro ao inserir favorito" + e);
     }
     aux.append("<br/>");
     aux.append("<br/>");
-    aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
+    aux.append(
+        "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
     aux.append("</body></html>");
-    
+
     return aux.toString();
   }
-  
-  
+
+  @GetMapping(path = "/searchFav")
+  public String procurarPorId(@RequestParam(name = "id") int id) {
+    Optional<Favorito> fav = fr.findById(id);
+    Favorito favv = null;
+    StringBuilder aux = new StringBuilder();
+    aux.append("<body style = font-size:30px><html>");
+
+    try {
+      fav = fr.findById(id);
+      if (fav != null) {
+        favv = fav.get();
+      }
+    } catch (NoSuchElementException e) {
+      aux.append("Nao foi encontrado nenhum favorito com este ID!");
+      aux.append("<br/>");
+      aux.append(
+          "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
+      aux.append("</body></html>");
+      return aux.toString();
+    }
+    
+    aux.append("Favorito de ID: " + favv.getId());
+    aux.append("<br/>");
+    aux.append("Nome: " + favv.getNome());
+    aux.append("<br/>");
+    aux.append("ID do Usuario que tem esse Favorito: " + favv.getUsuario().getId());
+    aux.append("<br/>");
+    aux.append("<br/>");
+    aux.append(
+        "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
+    aux.append("</body></html>");
+
+    return aux.toString();
+  }
+
   @GetMapping("/searchAllFavs")
   public String procurarTodos() {
     Iterable<Favorito> fav = fr.findAll();
@@ -81,54 +109,57 @@ public class FavoritoController {
       aux.append("<br/>");
       aux.append("<br/>");
     }
-    aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
+    aux.append(
+        "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
     aux.append("<br/>");
     aux.append("<br/>");
     aux.append("</body></html>");
     return aux.toString();
-
   }
-  
-  @GetMapping(path = "/searchFav")
-  public String procurarPorId(@RequestParam(name = "id") int id) {
-    Optional<Favorito> fav = fr.findById(id);
-    Favorito favv = null;
-    if(fav != null) {
-       favv = fav.get();
-    }
-    
+
+  @GetMapping("/updateFav")
+  public String alterar(Favorito favorito, @RequestParam(name = "idUser") int idUser) {
     StringBuilder aux = new StringBuilder();
-    aux.append("<body style = font-size:30px><html>");
-    aux.append("Favorito de ID: " + favv.getId());
-    aux.append("<br/>");
-    aux.append("Nome: " + favv.getNome());
-    aux.append("<br/>");
-    aux.append("ID do Usuario que tem esse Favorito: " + favv.getUsuario().getId());
-    aux.append("<br/>");
-    aux.append("<br/>");
-    aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
-    aux.append("</body></html>");
+    Optional<Favorito> fav = fr.findById(favorito.getId());
 
+    Optional<Usuario> user = ur.findById(idUser);
+    aux.append("<body style = \"font-size:30px\" color:blue ><html>");
+    try {
+      if (fav != null && user != null) {
+        Usuario userv = user.get();
+        Favorito favor = new Favorito(favorito.getId(), favorito.getNome(), userv);
+        fr.save(favor);
+        aux.append("Favorito alterado");
+      }
+    } catch (NoSuchElementException e) {
+      aux.append("Nao foi possivel encontrar nenhum ID de favorito ou de Usuario!");
+    }
+
+    aux.append("<br/>");
+    aux.append("<br/>");
+    aux.append(
+        "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Favorito</a>");
+    aux.append("</body></html>");
     return aux.toString();
   }
-  
+
   @GetMapping(path = "/deleteFav")
   public String deletar(@RequestParam(name = "id") int id) {
     StringBuilder aux = new StringBuilder();
     aux.append("<body style = \"font-size:30px\" color:blue ><html>");
 
-    if(fr.existsById(id)) {
+    if (fr.existsById(id)) {
       fr.deleteById(id);
-    aux.append("Favorito de ID " + id + " REMOVIDO do banco de dados");
-    }else {
+      aux.append("Favorito de ID " + id + " REMOVIDO do banco de dados");
+    } else {
       aux.append("Nao foi achado nenhum favorito com este ID!");
     }
     aux.append("<br/>");
     aux.append("<br/>");
-    aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Usuario</a>");
+    aux.append(
+        "<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/favorito.html\">Voltar para Usuario</a>");
     aux.append("</body></html>");
     return aux.toString();
-
   }
 
 }

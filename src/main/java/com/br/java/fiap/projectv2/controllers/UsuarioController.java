@@ -1,12 +1,12 @@
 package com.br.java.fiap.projectv2.controllers;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,6 @@ public class UsuarioController {
 //    model.setViewName("usuario.html");
     StringBuilder aux = new StringBuilder();
     aux.append("<body style = font-size:30px><html>");
-
     if (ur.existsById(usuario.getId())) {
        aux.append("Já existe um usuario com este Id");
     } else {
@@ -45,56 +44,55 @@ public class UsuarioController {
     aux.append("<br/>");
     aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
     aux.append("</body></html>");
-
     return aux.toString();
   }
 
-  @PutMapping("/updateUser")
+  @GetMapping("/updateUser")
   public String alterar(Usuario usuario) {
-
+    StringBuilder aux = new StringBuilder();
     Optional<Usuario> user = ur.findById(usuario.getId());
 
     if (user != null) {
       ur.save(usuario);
     }
-
-    return "Usuario alterado";
-  }
-
-  @GetMapping(path = "/deleteUser")
-  public String deletar(@RequestParam(name = "idUser") int id) {
-    StringBuilder aux = new StringBuilder();
     aux.append("<body style = \"font-size:30px\" color:blue ><html>");
-
-    if(ur.existsById(id)) {
-    ur.deleteById(id);
-    aux.append("Usuario de ID " + id + " REMOVIDO do banco de dados");
-    }else {
-      aux.append("Nao foi achado nenhum usuario com este ID!");
-    }
+    aux.append("Usuario alterado");
     aux.append("<br/>");
     aux.append("<br/>");
     aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
     aux.append("</body></html>");
+    
     return aux.toString();
-
   }
 
   @GetMapping(path = "/searchUser")
   public String procurarPorId(@RequestParam(name = "id") int id) {
-    Optional<Usuario> usuario = ur.findById(id);
+    Optional<Usuario> usuario = null;
+    StringBuilder aux = new StringBuilder();
     Usuario user = null;
-    
+    aux.append("<body style = \"font-size:30px\" ><html>");
+
+    try {
+    usuario = ur.findById(id);
     if(usuario != null) {
       user = usuario.get();
     }
-    StringBuilder aux = new StringBuilder();
-    aux.append("<body style = \"font-size:30px\" color:blue ><html>");
+    }catch(NoSuchElementException e) {
+      aux.append("Nao foi encontrado nenhum usuario com este ID!");
+      aux.append("<br/>");
+      aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
+      aux.append("</body></html>");
+      return aux.toString();
+    }
+    
     aux.append("Usuario de ID: " + user.getId());
     aux.append("<br/>");
     aux.append("Nome: " + user.getNome() + " " + user.getSobrenome());
     aux.append("<br/>");
     aux.append("CPF: " + user.getCpf());
+    aux.append("<br/>");
+    aux.append("Email: " + user.getEmail());
+    aux.append("<br/>");
     aux.append("<br/>");
     aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
     aux.append("</body></html>");
@@ -114,11 +112,31 @@ public class UsuarioController {
       aux.append("<br/>");
       aux.append("CPF: " + usuario.getCpf());
       aux.append("<br/>");
+      aux.append("Email: " + usuario.getEmail());
+      aux.append("<br/>");
       aux.append("<br/>");
     }
     aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
     aux.append("</body></html>");
     return aux.toString();
+  }
+  
+  @GetMapping(path = "/deleteUser")
+  public String deletar(@RequestParam(name = "idUser") int id) {
+    StringBuilder aux = new StringBuilder();
+    aux.append("<body style = \"font-size:30px\" color:blue ><html>");
 
+    if(ur.existsById(id)) {
+    ur.deleteById(id);
+    aux.append("Usuario de ID " + id + " REMOVIDO do banco de dados");
+    }else {
+      aux.append("Nao foi achado nenhum usuario com este ID!");
+    }
+    
+    aux.append("<br/>");
+    aux.append("<br/>");
+    aux.append("<a style=\"text-decoration:none;font-size:30px; color:blue \" href=\"http://localhost:8080/usuario.html\">Voltar para Usuario</a>");
+    aux.append("</body></html>");
+    return aux.toString();
   }
 }

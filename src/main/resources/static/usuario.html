@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="style.css">
 
+    <title>Usuario</title>
+
 <body>
 
     <div class="icon-bar">
@@ -61,22 +63,22 @@
             <h2>Alterar Usuario</h2>
             <form class="forms" action="usuario/updateUser" method="put">
                 <label class= "data"  for="id"> Id do usuario: </label>
-                <input type="text" name="id">
+                <input type="text" name="id" required="required">
 
                 <label class= "data"  for="nome"> Nome: </label>
-                <input type="text" name="nome">
+                <input type="text" name="nome" required="required">
 
                 <label class= "data"  for="sobrenome"> Sobrenome: </label>
                 <input type="text" name="sobrenome">
 
                 <label class= "data"  for="email"> Email: </label>
-                <input type="text" name="email">
+                <input type="text" name="email" required="required">
 
                 <label class= "data"  for="cpf"> CPF: </label>
-                <input type="text" name="cpf">
+                <input type="text" name="cpf" required="required">
 
                 <label class= "data"  for="idade"> Idade: </label>
-                <input type="text" name="idade">
+                <input type="text" name="idade" required="required">
 
                 <input class="bottom" type="submit" value="Alterar Usuario">
             </form>
@@ -86,7 +88,7 @@
             <h2>Excluir Usuario</h2>
             <form class="forms" action="usuario/deleteUser" method="get">
                 <label class= "data"  for="idUser"> Id do usuario: </label>
-                <input type="text" name="idUser" >
+                <input type="text" name="idUser" required="required" >
                 <input class="bottom-delete" type="submit" value="DELETAR usuario">
             </form>
         </div>
